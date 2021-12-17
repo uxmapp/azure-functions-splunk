@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 const utils = require('../helpers/config');
-const splunk = require('../helpers/splunk');
 
 module.exports = async function (context, req) {
     let msg = '[subscription-webhook] received HTTP request on the subscription-webhook.';
     context.log(msg);
-    splunk.logInfo(msg);
 
     // Make sure we have values for the application
     if (!utils.checkConfig()) {
@@ -36,7 +34,6 @@ module.exports = async function (context, req) {
         // We just need to respond back with the validationToken.
         let msg = '[subscription-webhook] received request to validate subscription webhook: ' + req.query.validationToken;
         context.log(msg);
-        splunk.logInfo(msg);
         context.res = {
             body: req.query.validationToken
         };
@@ -45,9 +42,7 @@ module.exports = async function (context, req) {
         // Graph is sending us some data!
         msg = '[subscription-webhook] received a subscription notification: ' + JSON.stringify(req.body);
         context.log(msg);
-        splunk.logInfo(msg);
         try {
-            splunk.logInfo(msg);
             for (let i = 0; i < req.body.value.length; i++) {
                 context.bindings.notificationQueue = req.body.value[i].resource;           
             }

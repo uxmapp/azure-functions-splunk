@@ -18,7 +18,6 @@ const { BlobServiceClient, BlockBlobClient } = require("@azure/storage-blob");
 const blobServiceClient = BlobServiceClient.fromConnectionString(process.env["AzureWebJobsStorage"]);
 const containerClient = blobServiceClient.getContainerClient('subscriptions');
 const graph = require('../helpers/graph');
-const splunk = require('../helpers/splunk');
 
 // A helper method used to read a Node.js readable stream into string
 async function streamToString(readableStream) {
@@ -49,7 +48,6 @@ module.exports = async function (context, myTimer) {
         }
     } catch(err) {
         context.log.error(err);
-        splunk.logError(JSON.stringify(err));
         context.res = {
             body: `Error getting blobs: ${err}`
         };
@@ -59,7 +57,6 @@ module.exports = async function (context, myTimer) {
     // Loop through the subscriptions and check if they need updating.
     for (let i = 0; i < subscriptionsToCheck.length; i++) {
         let subscription = subscriptionsToCheck[i];
-        splunk.logInfo(`[update-subscriptions] checking subscription ${JSON.stringify(subscription)}`);
 
         if (!subscriptionExpiresSoon(subscription.subscriptionExpirationDateTime)) {
             continue;
@@ -69,7 +66,6 @@ module.exports = async function (context, myTimer) {
         let expirationDateTime = new Date();
         expirationDateTime.setDate(expirationDateTime.getDate() + 2);
         let newSubscriptionExpirationDateTime = expirationDateTime.toISOString();
-        splunk.logInfo(`[update-subscriptions] updating subscription ${JSON.stringify(subscription)}. New expiration: ${newSubscriptionExpirationDateTime}`);
         
         await graph.updateSubscriptionExpiration(subscription.subscriptionId, newSubscriptionExpirationDateTime)
             .then(() => {
@@ -88,12 +84,10 @@ module.exports = async function (context, myTimer) {
                     // Looks like this subscription was removed, so remove it from the blob container.
                     let msg = `[update-subscriptions] a subscription with subscription Id '${subscription.subscriptionId}' was not found from Graph. Removing the blob item...`
                     context.log.warn(msg);
-                    splunk.logWarning(msg);
                     containerClient.deleteBlob(subscription.subscriptionId);
                 } else {
                     let errorMsg = `[update-subscriptions] could not update subscription from Graph: ${subscription.subscriptionId}, error: ${JSON.stringify(err)}`
                     context.log.error(errorMsg);
-                    splunk.logError(errorMsg);
                     context.res = {
                         body: errorMsg
                     };

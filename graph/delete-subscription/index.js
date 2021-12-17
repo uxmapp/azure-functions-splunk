@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 const graph = require('../helpers/graph');
-const splunk = require('../helpers/splunk');
 
 module.exports = async function (context, req) {
     let msg = '[delete-subscription] function triggered';
     context.log(msg);
-    splunk.logInfo(msg);
 
     if (req.query.subscriptionId || (req.body && req.body.subscriptionId)) {
         subscriptionId = (req.query.subscriptionId || req.body.subscriptionId);
@@ -29,14 +27,12 @@ module.exports = async function (context, req) {
             .then(() => {
                 msg = `[delete-subscription] deleted subscription with ID ${subscriptionId}`
                 context.log(msg);
-                splunk.logInfo(msg);
                 context.res = {
                     body: msg
                 }
             })
             .catch((err) => {
                 context.log.error(err);
-                splunk.logError(`[delete-subscription] ${JSON.stringify(err)}`);
                 context.res = {
                     body: `Error: ${JSON.stringify(err, null, 4)}`
                 };

@@ -18,12 +18,10 @@ const { BlobServiceClient } = require("@azure/storage-blob");
 const blobServiceClient = BlobServiceClient.fromConnectionString(process.env["AzureWebJobsStorage"]);
 const containerClient = blobServiceClient.getContainerClient('subscriptions');
 const graph = require('../helpers/graph');
-const splunk = require('../helpers/splunk');
 
 module.exports = async function (context, req) {
     let message = '[create-subscription] function triggered';
     context.log(message);
-    splunk.logInfo(message);
 
     // Currently only supporting call records
     let resource = "/communications/callRecords";
@@ -41,7 +39,6 @@ module.exports = async function (context, req) {
     await containerClient.createIfNotExists()
         .catch((err) => {
             context.log.error(err);
-            splunk.logError(`[create-subscription] ${JSON.stringify(err)}`);
             context.res = {
                 body: `Error creating subscription blob container: ${JSON.stringify(err, null, 4)}`
             };
@@ -52,7 +49,6 @@ module.exports = async function (context, req) {
         .then((subscription) => {
             msg = `[create-subscription] created subscription: ${JSON.stringify(subscription, null, 4)}`
             context.log(msg);
-            splunk.logInfo(msg);
             return subscription;
         })
         .then((subscription) => {
@@ -74,14 +70,12 @@ module.exports = async function (context, req) {
                 });
             let msg = `[create-subscription] successfully created subscription: ${JSON.stringify(subscription, null, 4)}`
             context.log(msg);
-            splunk.logInfo(msg);
             context.res = {
                 body: msg
             };
         })
         .catch((err) => {
             context.log.error(err);
-            splunk.logError(JSON.stringify(err));
             context.res = {
                 body: `[create-subscription] error: ${JSON.stringify(err, null, 4)}`
             };

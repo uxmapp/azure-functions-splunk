@@ -22,7 +22,7 @@
         },
         "githubRepoURL": {
             "type": "string",
-            "defaultValue": "https://github.com/splunk/azure-functions-splunk.git"
+            "defaultValue": "https://github.com/rtoelhoej/azure-functions-splunk.git"
         },
         "githubRepoBranch": {
             "type": "string",
@@ -31,19 +31,19 @@
         "TenantID" : {
             "type": "string",
             "metadata": {
-                "description": "<a href='https://github.com/splunk/azure-functions-splunk/blob/master/graph/README.md'>Documentation</a>"
+                "description": "<a href='https://github.com/rtoelhoej/azure-functions-splunk/blob/master/graph/README.md'>Documentation</a>"
             }
         },
         "ClientID" : {
             "type": "string",
             "metadata": {
-                "description": "<a href='https://github.com/splunk/azure-functions-splunk/blob/master/graph/README.md'>Documentation</a>"
+                "description": "<a href='https://github.com/rtoelhoej/azure-functions-splunk/blob/master/graph/README.md'>Documentation</a>"
             }
         },
         "ClientSecret": {
             "type": "string",
             "metadata": {
-                "description": "<a href='https://github.com/splunk/azure-functions-splunk/blob/master/graph/README.md'>Documentation</a>"
+                "description": "<a href='https://github.com/rtoelhoej/azure-functions-splunk/blob/master/graph/README.md'>Documentation</a>"
             }
         }
     },
@@ -111,14 +111,6 @@
                         {
                             "name": "WEBSITE_CONTENTSHARE",
                             "value": "[toLower(variables('functionAppName'))]"
-                        },
-                        {
-                            "name": "SPLUNK_HEC_TOKEN",
-                            "value": "[parameters('SplunkToken')]"
-                        },
-                        {
-                            "name": "SPLUNK_HEC_URL",
-                            "value": "[parameters('SplunkEndpoint')]"
                         },
                         {
                             "name": "CLIENT_ID",
