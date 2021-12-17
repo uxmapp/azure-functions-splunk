@@ -28,16 +28,10 @@
             "type": "string",
             "defaultValue": "master"
         },
-        "SplunkEndpoint": {
+        "TenantID" : {
             "type": "string",
             "metadata": {
-                "description": "Splunk HEC endpoint. For details, refer to the <a href='https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector'>Splunk documentation</a>."
-            }
-        },
-        "SplunkToken": {
-            "type": "string",
-            "metadata": {
-                "description": "Splunk HEC token. For details, refer to the <a href='https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector'>Splunk documentation</a>."
+                "description": "<a href='https://github.com/splunk/azure-functions-splunk/blob/master/graph/README.md'>Documentation</a>"
             }
         },
         "ClientID" : {
@@ -136,7 +130,7 @@
                         },
                         {
                             "name": "TENANT_ID",
-                            "value": "[subscription().tenantId]"
+                            "value": "[parameters('TenantID')]"
                         },
                         {
                             "name": "Project",
