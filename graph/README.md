@@ -22,8 +22,6 @@ Use the above button to deploy the Azure Functions from this repo to your Azure 
 
 * Client ID
 * Client Secret
-* Splunk [HTTP Event Collector](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) Endpoint
-* Splunk [HTTP Event Collector](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) Token
 
 #### Securing Azure Function settings
 Microsoft stores the above values as [application settings](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings#settings). These settings are stored encrypted, but you may opt to transfer one or more of these settings to a Key Vault. Refer to the following documentation for details on this procedure:
@@ -67,7 +65,7 @@ This software is released as-is. Splunk provides no warranty and no support on t
 ## How it works
 1. When the `create-subscription` function successfully creates a Microsoft Graph subscription, the subscription ID and expiration date is written to a storage blob.
 1. After a subscribed event occurs, a notification is sent to the `subscription-webhook`.  The `subscription-webhook` commits the data to a notification queue to keep things speedy.
-1. When an event arrives on the notification queue, the `process-notification-queue` function is triggered.  This function retrieves the data from Microsoft Graph and forwards the data to Splunk.
+1. UXMapp polls the notification queue every 60 seconds and requests the data and removes the item from the queue.
 1. Since subscriptions have a short lifespan, the `update-subscriptions` function periodically reads the blobs and will update subscriptions if they are about to expire.
 
 [![subscription-webhook](docs/images/Azure-Functions-for-Graph.svg)](docs/images/Azure-Functions-for-Graph.svg)
