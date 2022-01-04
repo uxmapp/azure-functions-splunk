@@ -57,7 +57,7 @@ A Microsoft Graph subscription defines where Microsoft should deliver notificati
 
 Run the following Splunk query
 
-> `sourcetype="m365:*"`
+> `sourcetype="uxm:*"`
 
 (optional) Download and install the [Microsoft 365 App for Splunk](https://splunkbase.splunk.com/app/3786/)
 
