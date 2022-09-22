@@ -102,11 +102,11 @@
                         },
                         {
                             "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                            "value": "~16"
+                            "value": "~14"
                         },
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
-                            "value": "~4"
+                            "value": "~3"
                         },
                         {
                             "name": "WEBSITE_CONTENTSHARE",
