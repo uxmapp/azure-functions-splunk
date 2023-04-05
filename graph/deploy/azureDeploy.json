@@ -58,6 +58,9 @@
             "apiVersion": "2019-06-01",
             "location": "[resourceGroup().location]",
             "kind": "Storage",
+            "properties": {
+                "minimumTlsVersion": "TLS1_2"
+            },
             "sku": {
                 "name": "[parameters('storageAccountType')]"
             }
