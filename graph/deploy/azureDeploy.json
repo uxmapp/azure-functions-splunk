@@ -57,7 +57,7 @@
             "name": "[variables('storageAccountName')]",
             "apiVersion": "2019-06-01",
             "location": "[resourceGroup().location]",
-            "kind": "Storage",
+            "kind": "StorageV2",
             "properties": {
                 "minimumTlsVersion": "TLS1_2"
             },
