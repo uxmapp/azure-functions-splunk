@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "appName": {
+        "value": "azure-functions-splunk-graph-appXX"
+      },
+      "TenantID": {
+        "reference": {
+          "keyVault": {
+            "id": "/subscriptions/8418fce7-1008-4493-ae5e-505ca88ad31a/resourceGroups/azure-rg-uxm-teams-resources/providers/Microsoft.KeyVault/vaults/rg-uxm-teams-resources"
+          },
+          "secretName": "TenantID"
+        }
+      },
+      "ClientID": {
+        "reference": {
+          "keyVault": {
+            "id": "/subscriptions/8418fce7-1008-4493-ae5e-505ca88ad31a/resourceGroups/azure-rg-uxm-teams-resources/providers/Microsoft.KeyVault/vaults/rg-uxm-teams-resources"
+          },
+          "secretName": "ClientID"
+        }
+      },
+      "ClientSecret": {
+        "reference": {
+          "keyVault": {
+            "id": "/subscriptions/8418fce7-1008-4493-ae5e-505ca88ad31a/resourceGroups/azure-rg-uxm-teams-resources/providers/Microsoft.KeyVault/vaults/rg-uxm-teams-resources"
+          },
+          "secretName": "ClientSecret"
+        }
+      }
+    }
+  }
